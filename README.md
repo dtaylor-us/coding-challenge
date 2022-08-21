@@ -1,25 +1,31 @@
 # Bet Fanatics Coding Challenge
 
-### Overview
+This challenge was solved by implementing an API that will execute the steps outlined in the coding challenge.
+The application is a Spring Boot API and Maven is used to manage dependencies. The application is written in Java 17.
 
-For this coding challenge, you will be interfacing with an existing REST-based API and performing various operations against that API.
+## Running the Application
+You can start the application either by running a standalone JAR, using the Maven plugin or using Docker.
 
-The API and its documentation are located here:  https://gorest.co.in/
+#### Standalone Jar
 
-Be sure to read the entire page, as it includes details that will be required to finish this exercise.
+1) Package the application using maven to create an executable jar: `mvn clean install`
+2) Run the jar: `java -jar target/coding-challenge-0.0.1-SNAPSHOT.jar`
 
-Fork this repo and do all of your work against that fork. When you are finished, do not submit a pull request. Notify a member of our team that you are finished and we will review
-your code together.
+#### Maven Plugin
+Note: Must be using Java 17 to run the application using Maven Plugin
 
-### Instructions
+To run the application using maven run `mvn spring-boot:run`
 
-Using the REST API endpoints documented in the link in the previous section:
+#### Docker Container
 
-1. Retrieve page 3 of the list of all users.
-2. Using a logger, log the total number of pages from the previous request.
-3. Sort the retrieved user list by name.
-4. After sorting, log the name of the last user.
-5. Update that user's name to a new value and use the correct http method to save it.
-6. Delete that user.
-7. Attempt to retrieve a nonexistent user with ID 5555. Log the resulting http response code.
-8. Write unit tests for all code, mocking out calls to the actual API service.
+1) Build the image from root: `docker build -t coding-challenge . `
+2) Run docker container bind to port 8080: `docker run -p 8080:8080 coding-challenge
+   `
+## Trying it out
+
+In order for the worfklow to be executed you must make a `POST` request to: `http://localhost:8080/api/v1/execute`. You must add an `Authorization` header with a Bearer Token retrieved from [Go Rest](https://gorest.co.in/consumer/login).
+
+Example: `Authorization`, `Bearer <access-token>`
+
+Once the workflow is executed successfully you will receive the following response "Successfully completed workflow". If the token is missing or invalid you will receive a message regarding a client exception and asking for valid token.
+
