@@ -23,6 +23,12 @@ public class API {
         // Retrieve page 3 of the list of all users.
         List<User> users = userService.getUsersByPageNumber(3);
 
+        // Sort the retrieved user list by name.
+        User lastUser = userService.getLastUser(users);
+
+        // Update that user's name to a new value and use the correct http method to save it.
+        lastUser.setName("Jane Doe");
+        final User updatedUser = userService.updateUser(accessToken, lastUser);
 
         return "Successfully completed workflow";
     }
