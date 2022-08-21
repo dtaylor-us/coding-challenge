@@ -80,6 +80,16 @@ public class UserService {
         restTemplate.exchange(getUserUrl(updatedUser.getId()), HttpMethod.DELETE, userRequestEntity, Void.class);
     }
 
+    public User getUserById(final long userId) {
+        try {
+            ResponseEntity<User> response = restTemplate.getForEntity(getUserUrl(userId), User.class);
+            return response.getBody();
+        } catch (HttpClientErrorException ex) {
+            log.info(ex.getStatusCode().toString());
+            return new User();
+        }
+    }
+
     private HttpEntity<User> createUserRequestEntity(String accessToken, User entity) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", accessToken);

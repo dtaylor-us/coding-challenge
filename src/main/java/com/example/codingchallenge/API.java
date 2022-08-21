@@ -33,6 +33,9 @@ public class API {
         // delete user
         userService.deleteUser(accessToken, updatedUser);
 
+        // Attempt to retrieve a nonexistent user with ID 5555. Log the resulting http response code.
+        userService.getUserById(5555);
+
         return "Successfully completed workflow";
     }
 }

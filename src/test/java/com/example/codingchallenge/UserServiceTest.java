@@ -129,4 +129,41 @@ class UserServiceTest {
         );
     }
 
+    @Test
+    void getUserById_userNotFound() {
+        int userId = 5555;
+
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+
+        // add the appender to the logger
+        userServiceLogger.addAppender(listAppender);
+        when(restTemplate.getForEntity(BASE_URL + userId, User.class)).thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        userService.getUserById(userId);
+
+        List<ILoggingEvent> logsList = listAppender.list;
+        assertEquals("404 NOT_FOUND", logsList.get(0).getMessage());
+    }
+
+    @Test
+    void getUserById() {
+        int userId = 5555;
+
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+
+        // add the appender to the logger
+        userServiceLogger.addAppender(listAppender);
+        User user = new User();
+        ResponseEntity<User> response = new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+
+        when(restTemplate.getForEntity(BASE_URL + userId, User.class)).thenReturn(response);
+
+        User result = userService.getUserById(userId);
+
+        assertEquals(user, result);
+    }
+
+
 }
