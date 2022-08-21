@@ -30,6 +30,9 @@ public class API {
         lastUser.setName("Jane Doe");
         final User updatedUser = userService.updateUser(accessToken, lastUser);
 
+        // delete user
+        userService.deleteUser(accessToken, updatedUser);
+
         return "Successfully completed workflow";
     }
 }

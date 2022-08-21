@@ -114,4 +114,19 @@ class UserServiceTest {
         assertEquals(user, results);
     }
 
+    @Test
+    void deleteUser() {
+        User user = TestUtil.getUserList().get(0);
+
+        ResponseEntity<User> usersEntity = new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+
+        userService.deleteUser("xxxx", user);
+
+        verify(restTemplate).exchange(Mockito.eq(BASE_URL + 3721),
+                Mockito.eq(HttpMethod.DELETE),
+                Mockito.<HttpEntity<User>>any(),
+                Mockito.eq(Void.class)
+        );
+    }
+
 }

@@ -75,6 +75,11 @@ public class UserService {
         return userOptional.orElseGet(User::new);
     }
 
+    public void deleteUser(String accessToken, User updatedUser) {
+        HttpEntity<User> userRequestEntity = createUserRequestEntity(accessToken, updatedUser);
+        restTemplate.exchange(getUserUrl(updatedUser.getId()), HttpMethod.DELETE, userRequestEntity, Void.class);
+    }
+
     private HttpEntity<User> createUserRequestEntity(String accessToken, User entity) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", accessToken);
